@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kişisel Sayfam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --latte-base: #eff1f5;
+        --latte-text: #4c4f69;
+        --latte-subtext: #5c5f77;
+        --latte-surface: #e6e9ef;
+        --latte-accent: #d20f39;
+        --latte-blue: #1e66f5;
+        --latte-green: #40a02b;
+      }
+
+      body {
+        background-color: var(--latte-base);
+        color: var(--latte-text);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      a {
+        color: var(--latte-blue);
+        transition: color 0.3s;
+      }
+
+      a:hover {
+        color: var(--latte-accent);
+      }
+    </style>
+  </head>
+  <body class="flex flex-col items-center min-h-screen px-4 py-8">
+    <!-- GitHub profil bilgileri -->
+    <div id="profile" class="flex flex-col items-center gap-2 bg-[color:var(--latte-surface)] p-6 rounded-2xl shadow-md">
+      <img id="avatar" src="" alt="Profil Resmi" class="w-28 h-28 rounded-full shadow-lg border-4 border-[color:var(--latte-accent)]" />
+      <h1 id="username" class="text-2xl font-bold"></h1>
+    </div>
+
+    <!-- Kendini tanıttığın açıklama kısmı -->
+    <section class="mt-8 max-w-xl text-center bg-[color:var(--latte-surface)] p-6 rounded-xl shadow">
+      <p class="text-lg text-[color:var(--latte-subtext)]">
+        Merhaba! Ben <strong>Misaki</strong>. Android, GNU/Linux ve Windows ile ilgilenen bir Türk genciyim.
+      </p>
+    </section>
+
+    <!-- Sosyal medya linkleri -->
+    <footer class="mt-auto py-6 flex gap-6">
+      <a href="https://instagram.com/misaki.taro_" target="_blank">Instagram</a>
+      <a href="https://github.com/msktaro" target="_blank">GitHub</a>
+    </footer>
+
+    <!-- GitHub kullanıcı adı ile veri çekme -->
+    <script>
+      const githubUsername = "msktaro"; // kendi kullanıcı adını yaz
+
+      fetch(`https://api.github.com/users/${githubUsername}`)
+        .then((res) => {
+          if (!res.ok) throw new Error("GitHub verisi alınamadı.");
+          return res.json();
+        })
+        .then((data) => {
+          document.getElementById("username").textContent = data.name || data.login;
+          document.getElementById("avatar").src = data.avatar_url;
+        })
+        .catch((err) => {
+          document.getElementById("username").textContent = "GitHub kullanıcı adı yüklenemedi";
+          console.error(err);
+        });
+    </script>
+  </body>
+</html>
